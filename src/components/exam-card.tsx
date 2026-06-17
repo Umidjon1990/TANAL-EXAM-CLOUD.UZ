@@ -89,28 +89,42 @@ export function ExamCard({ exam }: { exam: PublicExam }) {
             <div className="space-y-1">
               <p className="text-muted-foreground">{exam.location}</p>
               <div className="flex flex-wrap gap-2">
-                <a
-                  href={googleMapsUrl(
-                    `${exam.location}, ${exam.testCenter.city}`,
-                  )}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
-                >
-                  <MapPin className="size-3" />
-                  Google Maps
-                </a>
-                <a
-                  href={yandexMapsUrl(
-                    `${exam.location}, ${exam.testCenter.city}`,
-                  )}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
-                >
-                  <MapPin className="size-3" />
-                  Yandex
-                </a>
+                {exam.mapUrl ? (
+                  <a
+                    href={exam.mapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+                  >
+                    <MapPin className="size-3" />
+                    Xaritada ochish
+                  </a>
+                ) : (
+                  <>
+                    <a
+                      href={googleMapsUrl(
+                        `${exam.location}, ${exam.testCenter.city}`,
+                      )}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
+                    >
+                      <MapPin className="size-3" />
+                      Google Maps
+                    </a>
+                    <a
+                      href={yandexMapsUrl(
+                        `${exam.location}, ${exam.testCenter.city}`,
+                      )}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
+                    >
+                      <MapPin className="size-3" />
+                      Yandex
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>

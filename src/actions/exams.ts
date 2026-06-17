@@ -29,6 +29,7 @@ export async function submitExamAction(
     examDate: formData.get("examDate"),
     registrationDeadline: formData.get("registrationDeadline"),
     location: formData.get("location"),
+    mapUrl: formData.get("mapUrl"),
     capacity: formData.get("capacity") || undefined,
     price: formData.get("price") || undefined,
     description: formData.get("description"),
@@ -49,6 +50,7 @@ export async function submitExamAction(
         ? new Date(data.registrationDeadline)
         : null,
       location: data.location,
+      mapUrl: data.mapUrl || null,
       capacity: data.capacity ?? null,
       price: data.price ?? null,
       description: data.description || null,

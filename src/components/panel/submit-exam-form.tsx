@@ -70,6 +70,19 @@ export function SubmitExamForm() {
             placeholder="Masalan: Toshkent, Chilonzor, 5-bino"
           />
         </div>
+        <div className="space-y-2 sm:col-span-2">
+          <Label htmlFor="mapUrl">Xarita havolasi (ixtiyoriy)</Label>
+          <Input
+            id="mapUrl"
+            name="mapUrl"
+            type="url"
+            placeholder="https://maps.google.com/... yoki https://yandex.uz/maps/..."
+          />
+          <p className="text-xs text-muted-foreground">
+            Google Maps / Yandex / 2GIS havolasini joylashtiring — talabalar bir
+            bosishda joyni topadi.
+          </p>
+        </div>
         <div className="space-y-2">
           <Label htmlFor="capacity">Joylar soni (ixtiyoriy)</Label>
           <Input

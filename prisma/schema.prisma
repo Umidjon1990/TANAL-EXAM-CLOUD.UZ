@@ -110,6 +110,7 @@ model ExamDate {
   capacity             Int? // Joylar soni
   price                Int? // Narx (so'mda)
   location             String // O'tkaziladigan joy
+  mapUrl               String? // Xarita havolasi (Google/Yandex/2GIS)
   description          String?
   status               ExamStatus @default(PENDING)
   rejectReason         String? // Rad etish sababi

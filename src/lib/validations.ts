@@ -62,6 +62,12 @@ export const createExamSchema = z.object({
     ),
   registrationDeadline: z.string().optional().or(z.literal("")),
   location: z.string().min(3, "O'tkaziladigan joyni kiriting").max(200),
+  mapUrl: z
+    .string()
+    .url("To'g'ri xarita havolasini kiriting (https://...)")
+    .max(500)
+    .optional()
+    .or(z.literal("")),
   capacity: z.coerce
     .number()
     .int()
