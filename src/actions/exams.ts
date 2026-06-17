@@ -4,10 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth/guards";
 import { writeAudit } from "@/lib/audit";
-import {
-  buildApprovedAnnouncement,
-  sendTelegramMessage,
-} from "@/lib/telegram";
+import { buildApprovedAnnouncement, sendTelegramMessage } from "@/lib/telegram";
 import { createExamSchema, rejectExamSchema } from "@/lib/validations";
 import type { ActionState } from "./auth";
 
@@ -22,7 +19,10 @@ export async function submitExamAction(
   const session = await requireRole("TEST_CENTER_ADMIN");
 
   if (!session.testCenterId) {
-    return { error: "Sizga test markazi biriktirilmagan. Administrator bilan bog'laning." };
+    return {
+      error:
+        "Sizga test markazi biriktirilmagan. Administrator bilan bog'laning.",
+    };
   }
 
   const parsed = createExamSchema.safeParse({
@@ -35,7 +35,9 @@ export async function submitExamAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri" };
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
   }
 
   const data = parsed.data;
@@ -124,7 +126,9 @@ export async function rejectExamAction(
     reason: formData.get("reason"),
   });
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri" };
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
   }
 
   const exam = await prisma.examDate.findUnique({

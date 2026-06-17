@@ -2,10 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Check, X } from "lucide-react";
-import {
-  approveExamAction,
-  rejectExamAction,
-} from "@/actions/exams";
+import { approveExamAction, rejectExamAction } from "@/actions/exams";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 

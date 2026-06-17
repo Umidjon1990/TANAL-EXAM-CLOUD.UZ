@@ -77,7 +77,9 @@ export default async function MarkazlarPage() {
                     <TableCell>
                       <p className="font-medium">{c.name}</p>
                       {c.phone ? (
-                        <p className="text-xs text-muted-foreground">{c.phone}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {c.phone}
+                        </p>
                       ) : null}
                     </TableCell>
                     <TableCell className="text-muted-foreground">

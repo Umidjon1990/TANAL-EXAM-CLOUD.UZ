@@ -2,12 +2,7 @@ import Link from "next/link";
 import { CalendarPlus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { requireTestCenterAdmin } from "@/lib/auth/guards";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Table,

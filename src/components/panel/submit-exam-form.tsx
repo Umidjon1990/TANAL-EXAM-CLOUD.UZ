@@ -72,11 +72,23 @@ export function SubmitExamForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="capacity">Joylar soni (ixtiyoriy)</Label>
-          <Input id="capacity" name="capacity" type="number" min={1} placeholder="50" />
+          <Input
+            id="capacity"
+            name="capacity"
+            type="number"
+            min={1}
+            placeholder="50"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="price">Narx, so'm (ixtiyoriy)</Label>
-          <Input id="price" name="price" type="number" min={0} placeholder="300000" />
+          <Input
+            id="price"
+            name="price"
+            type="number"
+            min={0}
+            placeholder="300000"
+          />
         </div>
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="description">Qo'shimcha ma'lumot (ixtiyoriy)</Label>

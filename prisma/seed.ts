@@ -15,7 +15,9 @@ async function main() {
 
   const existing = await prisma.user.findUnique({ where: { username } });
   if (existing) {
-    console.log(`ℹ️  Super admin "${username}" allaqachon mavjud. O'tkazib yuborildi.`);
+    console.log(
+      `ℹ️  Super admin "${username}" allaqachon mavjud. O'tkazib yuborildi.`,
+    );
     return;
   }
 

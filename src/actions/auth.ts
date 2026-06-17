@@ -32,7 +32,9 @@ export async function loginAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri" };
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
   }
 
   const { username, password } = parsed.data;
@@ -46,7 +48,10 @@ export async function loginAction(
   // tekshiramiz (timing-attack himoyasi uchun dummy hash bilan).
   const validPassword = user
     ? await verifyPassword(password, user.passwordHash)
-    : await verifyPassword(password, "$2a$12$invalidinvalidinvalidinvalidinvalidinvalidinv");
+    : await verifyPassword(
+        password,
+        "$2a$12$invalidinvalidinvalidinvalidinvalidinvalidinv",
+      );
 
   if (!user || !validPassword || !user.isActive) {
     await writeAudit({

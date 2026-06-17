@@ -59,11 +59,21 @@ export function CreateUserForm({ centers }: { centers: CenterOption[] }) {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="fullName">To'liq ism</Label>
-            <Input id="fullName" name="fullName" required placeholder="Ism Familiya" />
+            <Input
+              id="fullName"
+              name="fullName"
+              required
+              placeholder="Ism Familiya"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="testCenterId">Test markazi</Label>
-            <Select id="testCenterId" name="testCenterId" required defaultValue="">
+            <Select
+              id="testCenterId"
+              name="testCenterId"
+              required
+              defaultValue=""
+            >
               <option value="" disabled>
                 Tanlang...
               </option>

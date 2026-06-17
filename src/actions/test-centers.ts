@@ -24,7 +24,9 @@ export async function createTestCenterAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri" };
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
   }
 
   const { name, region, city, address, phone } = parsed.data;
@@ -65,7 +67,9 @@ export async function toggleTestCenterActiveAction(
 ): Promise<ActionState> {
   const session = await requireSuperAdmin();
 
-  const center = await prisma.testCenter.findUnique({ where: { id: centerId } });
+  const center = await prisma.testCenter.findUnique({
+    where: { id: centerId },
+  });
   if (!center) return { error: "Test markazi topilmadi" };
 
   await prisma.testCenter.update({

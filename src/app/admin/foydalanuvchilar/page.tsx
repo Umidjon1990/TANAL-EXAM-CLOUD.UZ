@@ -41,7 +41,8 @@ export default async function FoydalanuvchilarPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Foydalanuvchilar</h1>
         <p className="text-muted-foreground">
-          Test markaz adminlarini yarating. Ommaviy ro'yxatdan o'tish mavjud emas.
+          Test markaz adminlarini yarating. Ommaviy ro'yxatdan o'tish mavjud
+          emas.
         </p>
       </div>
 
@@ -82,7 +83,11 @@ export default async function FoydalanuvchilarPage() {
                     @{u.username}
                   </TableCell>
                   <TableCell>
-                    <Badge variant={u.role === "SUPER_ADMIN" ? "default" : "secondary"}>
+                    <Badge
+                      variant={
+                        u.role === "SUPER_ADMIN" ? "default" : "secondary"
+                      }
+                    >
                       {ROLE_LABELS[u.role]}
                     </Badge>
                   </TableCell>

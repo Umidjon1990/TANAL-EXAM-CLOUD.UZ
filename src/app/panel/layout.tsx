@@ -5,7 +5,11 @@ import type { NavItem } from "@/components/dashboard-nav";
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/panel", label: "Mening imtihonlarim", icon: LayoutDashboard },
-  { href: "/panel/yangi", label: "Yangi sana taklif qilish", icon: CalendarPlus },
+  {
+    href: "/panel/yangi",
+    label: "Yangi sana taklif qilish",
+    icon: CalendarPlus,
+  },
 ];
 
 export default async function PanelLayout({

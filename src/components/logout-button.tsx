@@ -7,7 +7,12 @@ import { Button } from "@/components/ui/button";
 export function LogoutButton() {
   return (
     <form action={logoutAction}>
-      <Button type="submit" variant="ghost" size="sm" className="w-full justify-start">
+      <Button
+        type="submit"
+        variant="ghost"
+        size="sm"
+        className="w-full justify-start"
+      >
         <LogOut className="size-4" />
         Chiqish
       </Button>

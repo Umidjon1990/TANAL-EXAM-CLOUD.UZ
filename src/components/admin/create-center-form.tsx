@@ -50,7 +50,12 @@ export function CreateCenterForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="name">Markaz nomi</Label>
-          <Input id="name" name="name" required placeholder="Masalan: Al-Manhal o'quv markazi" />
+          <Input
+            id="name"
+            name="name"
+            required
+            placeholder="Masalan: Al-Manhal o'quv markazi"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="region">Viloyat</Label>
@@ -67,7 +72,12 @@ export function CreateCenterForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="city">Shahar / tuman</Label>
-          <Input id="city" name="city" required placeholder="Masalan: Chilonzor" />
+          <Input
+            id="city"
+            name="city"
+            required
+            placeholder="Masalan: Chilonzor"
+          />
         </div>
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="address">Manzil (ixtiyoriy)</Label>

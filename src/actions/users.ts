@@ -26,7 +26,9 @@ export async function createUserAction(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri" };
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
   }
 
   const { username, fullName, password, testCenterId } = parsed.data;

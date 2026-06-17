@@ -19,7 +19,13 @@ interface PageProps {
   searchParams: Promise<{ region?: string; search?: string }>;
 }
 
-async function ExamList({ region, search }: { region?: string; search?: string }) {
+async function ExamList({
+  region,
+  search,
+}: {
+  region?: string;
+  search?: string;
+}) {
   const exams = await getPublicExams({ region, search });
 
   if (exams.length === 0) {
@@ -50,7 +56,9 @@ export default async function ImtihonlarPage({ searchParams }: PageProps) {
       <main className="flex-1">
         <div className="container py-10">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold tracking-tight">Imtihon sanalari</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Imtihon sanalari
+            </h1>
             <p className="mt-1 text-muted-foreground">
               Tasdiqlangan TANAL imtihon sanalarini viloyat yoki markaz bo'yicha
               saralang.
@@ -66,7 +74,9 @@ export default async function ImtihonlarPage({ searchParams }: PageProps) {
           <Suspense
             key={`${params.region}-${params.search}`}
             fallback={
-              <p className="text-center text-muted-foreground">Yuklanmoqda...</p>
+              <p className="text-center text-muted-foreground">
+                Yuklanmoqda...
+              </p>
             }
           >
             <ExamList region={params.region} search={params.search} />

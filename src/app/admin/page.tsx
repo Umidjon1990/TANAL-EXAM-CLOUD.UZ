@@ -1,12 +1,7 @@
 import { Clock, CheckCircle2, Building2, Users } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getAdminStats } from "@/lib/queries";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -35,7 +30,11 @@ export default async function AdminDashboardPage() {
 
   const statCards = [
     { label: "Tasdiqlash kutilmoqda", value: stats.pending, icon: Clock },
-    { label: "Tasdiqlangan sanalar", value: stats.approved, icon: CheckCircle2 },
+    {
+      label: "Tasdiqlangan sanalar",
+      value: stats.approved,
+      icon: CheckCircle2,
+    },
     { label: "Faol test markazlari", value: stats.centers, icon: Building2 },
     { label: "Markaz adminlari", value: stats.admins, icon: Users },
   ];

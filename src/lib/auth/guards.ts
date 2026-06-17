@@ -18,9 +18,7 @@ export async function requireAuth(): Promise<SessionPayload> {
 /**
  * Ma'lum rol(lar)ni talab qiladi. Aks holda yo'naltiradi.
  */
-export async function requireRole(
-  ...roles: Role[]
-): Promise<SessionPayload> {
+export async function requireRole(...roles: Role[]): Promise<SessionPayload> {
   const session = await requireAuth();
   if (!roles.includes(session.role)) {
     redirect("/kirish");

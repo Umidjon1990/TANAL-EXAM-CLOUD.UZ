@@ -11,7 +11,9 @@ const TELEGRAM_API = "https://api.telegram.org";
 export async function sendTelegramMessage(text: string): Promise<boolean> {
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHANNEL_ID) {
     if (env.NODE_ENV === "development") {
-      console.warn("[Telegram] Token yoki kanal ID sozlanmagan — xabar yuborilmadi.");
+      console.warn(
+        "[Telegram] Token yoki kanal ID sozlanmagan — xabar yuborilmadi.",
+      );
     }
     return false;
   }

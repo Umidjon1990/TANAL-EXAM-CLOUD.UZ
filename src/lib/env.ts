@@ -6,11 +6,19 @@ import { z } from "zod";
  */
 const envSchema = z.object({
   DATABASE_URL: z.string().url(),
-  AUTH_SECRET: z.string().min(32, "AUTH_SECRET kamida 32 belgidan iborat bo'lishi kerak"),
+  AUTH_SECRET: z
+    .string()
+    .min(32, "AUTH_SECRET kamida 32 belgidan iborat bo'lishi kerak"),
   TELEGRAM_BOT_TOKEN: z.string().optional().default(""),
   TELEGRAM_CHANNEL_ID: z.string().optional().default(""),
-  NEXT_PUBLIC_APP_URL: z.string().url().optional().default("http://localhost:3000"),
-  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  NEXT_PUBLIC_APP_URL: z
+    .string()
+    .url()
+    .optional()
+    .default("http://localhost:3000"),
+  NODE_ENV: z
+    .enum(["development", "test", "production"])
+    .default("development"),
 });
 
 const parsed = envSchema.safeParse(process.env);

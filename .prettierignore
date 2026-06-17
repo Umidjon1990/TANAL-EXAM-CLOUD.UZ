@@ -1,0 +1,14 @@
+# Yaratiladigan / ishlab chiqarish artefaktlari
+.next/
+out/
+build/
+node_modules/
+
+# Prisma generatsiya qiladi
+prisma/migrations/
+
+# Paket menejeri
+package-lock.json
+
+# Boshqa
+*.md

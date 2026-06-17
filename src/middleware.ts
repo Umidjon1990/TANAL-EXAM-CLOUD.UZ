@@ -29,8 +29,7 @@ export async function middleware(req: NextRequest) {
 
   // Tizimga kirgan foydalanuvchi login sahifasiga kirsa — panelga yo'naltiramiz
   if (pathname === "/kirish" && session) {
-    const target =
-      session.role === "SUPER_ADMIN" ? "/admin" : "/panel";
+    const target = session.role === "SUPER_ADMIN" ? "/admin" : "/panel";
     return NextResponse.redirect(new URL(target, req.url));
   }
 
