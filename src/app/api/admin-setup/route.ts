@@ -67,9 +67,27 @@ export async function GET(request: Request) {
       })),
     );
 
+    // Jadvallar holati (yetishmasa, db push hali ishlamagan bo'ladi)
+    const tableHealth: Record<string, string> = {};
+    for (const [name, check] of [
+      ["News", () => prisma.news.count()],
+      ["TelegramPostLog", () => prisma.telegramPostLog.count()],
+      ["ExamDate", () => prisma.examDate.count()],
+      ["TestCenter", () => prisma.testCenter.count()],
+    ] as const) {
+      try {
+        const n = await check();
+        tableHealth[name] = `OK (${n})`;
+      } catch (err) {
+        tableHealth[name] =
+          "XATO: " + (err instanceof Error ? err.message : String(err));
+      }
+    }
+
     return NextResponse.json({
       ok: true,
       database: "ulanish muvaffaqiyatli",
+      tableHealth,
       resetPerformed: doReset,
       resetResult,
       superAdminCount: admins.length,
