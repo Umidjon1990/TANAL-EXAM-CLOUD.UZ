@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useTransition } from "react";
+import { useCallback, useEffect, useRef, useTransition } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -11,6 +11,7 @@ export function ExamFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const update = useCallback(
     (key: string, value: string) => {
@@ -27,6 +28,21 @@ export function ExamFilters() {
     [router, searchParams],
   );
 
+  // Qidiruvni debounce qilamiz — har bosishda emas, 350ms tindan keyin.
+  const debouncedUpdate = useCallback(
+    (key: string, value: string) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => update(key, value), 350);
+    },
+    [update],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
   return (
     <div
       className="flex flex-col gap-3 sm:flex-row"
@@ -38,7 +54,7 @@ export function ExamFilters() {
           type="search"
           placeholder="Markaz nomi yoki joy bo'yicha qidirish..."
           defaultValue={searchParams.get("search") ?? ""}
-          onChange={(e) => update("search", e.target.value)}
+          onChange={(e) => debouncedUpdate("search", e.target.value)}
           className="pl-9"
         />
       </div>
