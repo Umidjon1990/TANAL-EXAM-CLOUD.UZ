@@ -1,10 +1,12 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { CalendarSearch } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ExamFilters } from "@/components/exam-filters";
 import { ExamCard } from "@/components/exam-card";
-import { Card, CardContent } from "@/components/ui/card";
+import { FadeIn } from "@/components/fade-in";
+import { EmptyState } from "@/components/empty-state";
 import { getPublicExams } from "@/lib/queries";
 
 export const metadata: Metadata = {
@@ -30,20 +32,28 @@ async function ExamList({
 
   if (exams.length === 0) {
     return (
-      <Card>
-        <CardContent className="py-12 text-center text-muted-foreground">
-          So'rovingizga mos imtihon sanasi topilmadi.
-        </CardContent>
-      </Card>
+      <EmptyState
+        icon={CalendarSearch}
+        title="Mos imtihon topilmadi"
+        description="So'rovingizga mos tasdiqlangan imtihon sanasi yo'q. Filtrlarni o'zgartirib ko'ring."
+      />
     );
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {exams.map((exam) => (
-        <ExamCard key={exam.id} exam={exam} />
-      ))}
-    </div>
+    <>
+      <p className="mb-4 text-sm text-muted-foreground">
+        <span className="font-semibold text-foreground">{exams.length} ta</span>{" "}
+        tasdiqlangan sana topildi
+      </p>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {exams.map((exam, i) => (
+          <FadeIn key={exam.id} delay={Math.min(i * 0.04, 0.4)}>
+            <ExamCard exam={exam} />
+          </FadeIn>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -54,18 +64,24 @@ export default async function ImtihonlarPage({ searchParams }: PageProps) {
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <div className="container py-10">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold tracking-tight">
+        {/* Sarlavha bandi */}
+        <div className="relative overflow-hidden border-b">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/[0.06] to-background" />
+          <div className="bg-grid absolute inset-0 -z-10 opacity-50 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
+          <div className="container py-12 sm:py-16">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Imtihon sanalari
             </h1>
-            <p className="mt-1 text-muted-foreground">
+            <p className="mt-2 max-w-2xl text-muted-foreground">
               Tasdiqlangan TANAL imtihon sanalarini viloyat yoki markaz bo'yicha
-              saralang.
+              saralang va sizga eng yaqinini toping.
             </p>
           </div>
+        </div>
 
-          <div className="mb-8">
+        <div className="container py-8">
+          {/* Filtrlar — yopishqoq */}
+          <div className="sticky top-16 z-20 mb-8 rounded-xl border bg-background/80 p-3 shadow-sm backdrop-blur">
             <Suspense fallback={null}>
               <ExamFilters />
             </Suspense>
@@ -74,7 +90,7 @@ export default async function ImtihonlarPage({ searchParams }: PageProps) {
           <Suspense
             key={`${params.region}-${params.search}`}
             fallback={
-              <p className="text-center text-muted-foreground">
+              <p className="py-12 text-center text-muted-foreground">
                 Yuklanmoqda...
               </p>
             }
