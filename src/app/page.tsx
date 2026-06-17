@@ -12,6 +12,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero";
 import { ExamCard } from "@/components/exam-card";
 import { FadeIn } from "@/components/fade-in";
+import { TiltCard } from "@/components/tilt-card";
 import { EmptyState } from "@/components/empty-state";
 import { CountUp } from "@/components/count-up";
 import { RegionChips } from "@/components/region-chips";
@@ -113,7 +114,9 @@ export default async function HomePage() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {upcoming.map((exam, i) => (
                 <FadeIn key={exam.id} delay={i * 0.06}>
-                  <ExamCard exam={exam} />
+                  <TiltCard>
+                    <ExamCard exam={exam} />
+                  </TiltCard>
                 </FadeIn>
               ))}
             </div>

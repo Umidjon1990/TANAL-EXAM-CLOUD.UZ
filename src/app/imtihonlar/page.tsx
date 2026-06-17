@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { ExamFilters } from "@/components/exam-filters";
 import { ExamCard } from "@/components/exam-card";
 import { FadeIn } from "@/components/fade-in";
+import { TiltCard } from "@/components/tilt-card";
 import { EmptyState } from "@/components/empty-state";
 import { getPublicExams } from "@/lib/queries";
 
@@ -49,7 +50,9 @@ async function ExamList({
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {exams.map((exam, i) => (
           <FadeIn key={exam.id} delay={Math.min(i * 0.04, 0.4)}>
-            <ExamCard exam={exam} />
+            <TiltCard>
+              <ExamCard exam={exam} />
+            </TiltCard>
           </FadeIn>
         ))}
       </div>

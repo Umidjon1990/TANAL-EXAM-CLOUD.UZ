@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CenterCard } from "@/components/center-card";
 import { FadeIn } from "@/components/fade-in";
+import { TiltCard } from "@/components/tilt-card";
 import { EmptyState } from "@/components/empty-state";
 import { getPublicCenters } from "@/lib/queries";
 
@@ -43,7 +44,9 @@ export default async function MarkazlarPage() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {centers.map((center, i) => (
                 <FadeIn key={center.id} delay={Math.min(i * 0.04, 0.4)}>
-                  <CenterCard center={center} />
+                  <TiltCard>
+                    <CenterCard center={center} />
+                  </TiltCard>
                 </FadeIn>
               ))}
             </div>

@@ -5,6 +5,7 @@ import * as motion from "motion/react-client";
 import { ArrowRight, CalendarCheck, Search, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroVisual } from "@/components/hero-visual";
+import { TiltCard } from "@/components/tilt-card";
 
 export function Hero({ approvedCount }: { approvedCount: number }) {
   return (
@@ -69,9 +70,11 @@ export function Hero({ approvedCount }: { approvedCount: number }) {
           ) : null}
         </motion.div>
 
-        {/* O'ng: vizual */}
+        {/* O'ng: vizual (3D tilt) */}
         <div className="lg:pl-8">
-          <HeroVisual />
+          <TiltCard max={14}>
+            <HeroVisual />
+          </TiltCard>
         </div>
       </div>
     </section>
