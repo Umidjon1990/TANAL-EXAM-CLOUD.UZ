@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth/guards";
 import { writeAudit } from "@/lib/audit";
-import { buildApprovedAnnouncement, sendTelegramMessage } from "@/lib/telegram";
+import { publishApprovedExam } from "@/lib/telegram-service";
 import { createExamSchema, rejectExamSchema } from "@/lib/validations";
 import type { ActionState } from "./auth";
 
@@ -99,18 +99,12 @@ export async function approveExamAction(examId: string): Promise<ActionState> {
     detail: `Imtihon tasdiqlandi: ${exam.id}`,
   });
 
-  // Telegram e'loni (xatolik bo'lsa ham asosiy oqim to'xtamaydi)
-  await sendTelegramMessage(
-    buildApprovedAnnouncement({
-      centerName: exam.testCenter.name,
-      examDate: exam.examDate,
-      location: exam.location,
-      region: exam.testCenter.region,
-    }),
-  );
+  // Telegram e'loni — idempotent, xatolikka chidamli, loglanadi.
+  await publishApprovedExam(exam.id);
 
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/imtihonlar");
   return { success: true };
 }
 

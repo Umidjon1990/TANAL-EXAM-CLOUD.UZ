@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MobileNav } from "@/components/mobile-nav";
 import { APP_NAME } from "@/lib/constants";
+
+const NAV_LINKS = [
+  { href: "/imtihonlar", label: "Imtihonlar" },
+  { href: "/markazlar", label: "Markazlar" },
+  { href: "/yangiliklar", label: "Yangiliklar" },
+  { href: "/haqida", label: "Loyiha haqida" },
+  { href: "/aloqa", label: "Aloqa" },
+];
 
 export function SiteHeader() {
   return (
@@ -15,14 +24,17 @@ export function SiteHeader() {
             {APP_NAME}
           </span>
         </Link>
-        <nav className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/imtihonlar">Imtihonlar</Link>
-          </Button>
-          <Button asChild size="sm">
+        <nav className="hidden items-center gap-1 md:flex">
+          {NAV_LINKS.map((link) => (
+            <Button key={link.href} asChild variant="ghost" size="sm">
+              <Link href={link.href}>{link.label}</Link>
+            </Button>
+          ))}
+          <Button asChild size="sm" className="ml-2">
             <Link href="/kirish">Kirish</Link>
           </Button>
         </nav>
+        <MobileNav links={NAV_LINKS} />
       </div>
     </header>
   );

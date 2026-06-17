@@ -8,7 +8,13 @@ CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'TEST_CENTER_ADMIN');
 CREATE TYPE "ExamStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'CANCELLED', 'EXPIRED');
 
 -- CreateEnum
-CREATE TYPE "AuditAction" AS ENUM ('USER_CREATED', 'USER_UPDATED', 'USER_DEACTIVATED', 'TEST_CENTER_CREATED', 'TEST_CENTER_UPDATED', 'EXAM_SUBMITTED', 'EXAM_APPROVED', 'EXAM_REJECTED', 'EXAM_CANCELLED', 'EXAM_EXPIRED', 'LOGIN_SUCCESS', 'LOGIN_FAILED');
+CREATE TYPE "TelegramPostType" AS ENUM ('EXAM_APPROVED', 'NEWS_PUBLISHED');
+
+-- CreateEnum
+CREATE TYPE "TelegramPostStatus" AS ENUM ('SENT', 'FAILED', 'SKIPPED');
+
+-- CreateEnum
+CREATE TYPE "AuditAction" AS ENUM ('USER_CREATED', 'USER_UPDATED', 'USER_DEACTIVATED', 'TEST_CENTER_CREATED', 'TEST_CENTER_UPDATED', 'EXAM_SUBMITTED', 'EXAM_APPROVED', 'EXAM_REJECTED', 'EXAM_CANCELLED', 'EXAM_EXPIRED', 'NEWS_CREATED', 'NEWS_UPDATED', 'NEWS_PUBLISHED', 'NEWS_DELETED', 'TELEGRAM_POST_SENT', 'TELEGRAM_POST_FAILED', 'LOGIN_SUCCESS', 'LOGIN_FAILED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -52,6 +58,7 @@ CREATE TABLE "ExamDate" (
     "description" TEXT,
     "status" "ExamStatus" NOT NULL DEFAULT 'PENDING',
     "rejectReason" TEXT,
+    "telegramPostedAt" TIMESTAMP(3),
     "testCenterId" TEXT NOT NULL,
     "submittedById" TEXT NOT NULL,
     "reviewedById" TEXT,
@@ -60,6 +67,38 @@ CREATE TABLE "ExamDate" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ExamDate_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "News" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "excerpt" TEXT,
+    "content" TEXT NOT NULL,
+    "coverImage" TEXT,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "publishedAt" TIMESTAMP(3),
+    "authorId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "News_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TelegramPostLog" (
+    "id" TEXT NOT NULL,
+    "type" "TelegramPostType" NOT NULL,
+    "status" "TelegramPostStatus" NOT NULL,
+    "chatId" TEXT,
+    "messageId" INTEGER,
+    "error" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "examDateId" TEXT,
+    "newsId" TEXT,
+
+    CONSTRAINT "TelegramPostLog_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -105,6 +144,27 @@ CREATE INDEX "ExamDate_testCenterId_idx" ON "ExamDate"("testCenterId");
 CREATE INDEX "ExamDate_status_examDate_idx" ON "ExamDate"("status", "examDate");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "News_slug_key" ON "News"("slug");
+
+-- CreateIndex
+CREATE INDEX "News_published_publishedAt_idx" ON "News"("published", "publishedAt");
+
+-- CreateIndex
+CREATE INDEX "News_authorId_idx" ON "News"("authorId");
+
+-- CreateIndex
+CREATE INDEX "TelegramPostLog_type_idx" ON "TelegramPostLog"("type");
+
+-- CreateIndex
+CREATE INDEX "TelegramPostLog_status_idx" ON "TelegramPostLog"("status");
+
+-- CreateIndex
+CREATE INDEX "TelegramPostLog_createdAt_idx" ON "TelegramPostLog"("createdAt");
+
+-- CreateIndex
+CREATE INDEX "TelegramPostLog_examDateId_idx" ON "TelegramPostLog"("examDateId");
+
+-- CreateIndex
 CREATE INDEX "AuditLog_action_idx" ON "AuditLog"("action");
 
 -- CreateIndex
@@ -121,6 +181,15 @@ ALTER TABLE "ExamDate" ADD CONSTRAINT "ExamDate_submittedById_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "ExamDate" ADD CONSTRAINT "ExamDate_reviewedById_fkey" FOREIGN KEY ("reviewedById") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "News" ADD CONSTRAINT "News_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TelegramPostLog" ADD CONSTRAINT "TelegramPostLog_examDateId_fkey" FOREIGN KEY ("examDateId") REFERENCES "ExamDate"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TelegramPostLog" ADD CONSTRAINT "TelegramPostLog_newsId_fkey" FOREIGN KEY ("newsId") REFERENCES "News"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_actorId_fkey" FOREIGN KEY ("actorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

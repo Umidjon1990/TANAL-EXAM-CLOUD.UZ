@@ -79,3 +79,16 @@ export const rejectExamSchema = z.object({
     .max(500),
 });
 export type RejectExamInput = z.infer<typeof rejectExamSchema>;
+
+export const createNewsSchema = z.object({
+  title: z.string().min(5, "Sarlavhani kiriting (kamida 5 belgi)").max(200),
+  excerpt: z.string().max(300).optional().or(z.literal("")),
+  content: z.string().min(20, "Matn kamida 20 belgidan iborat bo'lishi kerak"),
+  coverImage: z
+    .string()
+    .url("To'g'ri URL kiriting")
+    .optional()
+    .or(z.literal("")),
+  published: z.coerce.boolean().optional().default(false),
+});
+export type CreateNewsInput = z.infer<typeof createNewsSchema>;
