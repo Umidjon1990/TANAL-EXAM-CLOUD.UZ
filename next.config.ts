@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   serverExternalPackages: ["@prisma/client", "bcryptjs"],
+  // ESLint dev-bog'liqlik bo'lib, production build'da o'rnatilmaydi.
+  // Linting CI/lokalda alohida `npm run lint` orqali bajariladi.
+  eslint: { ignoreDuringBuilds: true },
   experimental: {
     optimizePackageImports: ["lucide-react", "motion"],
   },
