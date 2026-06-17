@@ -5,9 +5,6 @@ import {
   Building2,
   CalendarCheck,
   MapPin,
-  FileEdit,
-  BadgeCheck,
-  Megaphone,
   ArrowRight,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
@@ -39,24 +36,6 @@ const FEATURES = [
     title: "Vakolatli markazlar",
     description:
       "Faqat rasmiy ro'yxatdan o'tgan test markazlari ma'lumot kiritadi.",
-  },
-];
-
-const STEPS = [
-  {
-    icon: FileEdit,
-    title: "Markaz taklif qiladi",
-    description: "Vakolatli test markazi imtihon sanasini tizimga kiritadi.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Administrator tasdiqlaydi",
-    description: "Bosh administrator sanani tekshirib, tasdiqlaydi.",
-  },
-  {
-    icon: Megaphone,
-    title: "Hammaga e'lon qilinadi",
-    description: "Tasdiqlangan sana saytda va Telegram kanalda paydo bo'ladi.",
   },
 ];
 
@@ -134,38 +113,6 @@ export default async function HomePage() {
               ))}
             </div>
           )}
-        </section>
-
-        {/* Qanday ishlaydi */}
-        <section className="border-y bg-muted/30">
-          <div className="container py-14 sm:py-20">
-            <div className="mx-auto mb-10 max-w-2xl text-center">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                Qanday ishlaydi?
-              </h2>
-              <p className="mt-2 text-muted-foreground">
-                Uch oddiy bosqichda ishonchli imtihon ma'lumoti
-              </p>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-3">
-              {STEPS.map((step, i) => (
-                <FadeIn key={step.title} delay={i * 0.1}>
-                  <div className="relative h-full rounded-2xl border bg-card p-6 text-center">
-                    <span className="absolute -top-3 left-1/2 flex size-7 -translate-x-1/2 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                      {i + 1}
-                    </span>
-                    <span className="mx-auto mb-4 mt-2 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <step.icon className="size-6" />
-                    </span>
-                    <h3 className="font-semibold">{step.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {step.description}
-                    </p>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Xususiyatlar */}
