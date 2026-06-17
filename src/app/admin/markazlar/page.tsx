@@ -18,6 +18,9 @@ import {
 import { CreateCenterForm } from "@/components/admin/create-center-form";
 import { ToggleActiveButton } from "@/components/admin/toggle-active-button";
 import { toggleTestCenterActiveAction } from "@/actions/test-centers";
+import Link from "next/link";
+import { Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
@@ -93,11 +96,19 @@ export default async function MarkazlarPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <ToggleActiveButton
-                        id={c.id}
-                        isActive={c.isActive}
-                        action={toggleTestCenterActiveAction}
-                      />
+                      <div className="flex justify-end gap-2">
+                        <Button asChild size="sm" variant="outline">
+                          <Link href={`/admin/markazlar/${c.id}`}>
+                            <Pencil className="size-4" />
+                            Tahrirlash
+                          </Link>
+                        </Button>
+                        <ToggleActiveButton
+                          id={c.id}
+                          isActive={c.isActive}
+                          action={toggleTestCenterActiveAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

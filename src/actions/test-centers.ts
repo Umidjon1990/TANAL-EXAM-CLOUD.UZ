@@ -63,6 +63,63 @@ export async function createTestCenterAction(
   return { success: true };
 }
 
+/** Bosh admin mavjud test markazi ma'lumotlarini tahrirlaydi. */
+export async function updateTestCenterAction(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const session = await requireSuperAdmin();
+
+  const centerId = String(formData.get("centerId") ?? "");
+  if (!centerId) return { error: "Markaz tanlanmagan" };
+
+  const existing = await prisma.testCenter.findUnique({
+    where: { id: centerId },
+  });
+  if (!existing) return { error: "Test markazi topilmadi" };
+
+  const parsed = createTestCenterSchema.safeParse({
+    name: formData.get("name"),
+    region: formData.get("region"),
+    city: formData.get("city"),
+    address: formData.get("address"),
+    phone: formData.get("phone"),
+    telegram: formData.get("telegram"),
+  });
+
+  if (!parsed.success) {
+    return {
+      error: parsed.error.issues[0]?.message ?? "Ma'lumotlar noto'g'ri",
+    };
+  }
+
+  const { name, region, city, address, phone, telegram } = parsed.data;
+
+  await prisma.testCenter.update({
+    where: { id: centerId },
+    data: {
+      name,
+      region,
+      city,
+      address: address || null,
+      phone: phone || null,
+      telegram: telegram || null,
+    },
+  });
+
+  await writeAudit({
+    action: "TEST_CENTER_UPDATED",
+    actorId: session.userId,
+    detail: `Test markazi tahrirlandi: ${name}`,
+  });
+
+  revalidatePath("/admin/markazlar");
+  revalidatePath("/markazlar");
+  revalidatePath("/");
+  revalidatePath("/imtihonlar");
+  return { success: true };
+}
+
 /** Test markazini faollashtirish/o'chirish. */
 export async function toggleTestCenterActiveAction(
   centerId: string,
