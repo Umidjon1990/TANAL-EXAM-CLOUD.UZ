@@ -4,8 +4,7 @@ import Link from "next/link";
 import * as motion from "motion/react-client";
 import { ArrowRight, CalendarCheck, Search, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HeroVisual } from "@/components/hero-visual";
-import { TiltCard } from "@/components/tilt-card";
+import { HeroShowcase } from "@/components/hero-showcase";
 
 export function Hero({ approvedCount }: { approvedCount: number }) {
   return (
@@ -70,11 +69,9 @@ export function Hero({ approvedCount }: { approvedCount: number }) {
           ) : null}
         </motion.div>
 
-        {/* O'ng: vizual (3D tilt) */}
+        {/* O'ng: 3D / vizual */}
         <div className="lg:pl-8">
-          <TiltCard max={14}>
-            <HeroVisual />
-          </TiltCard>
+          <HeroShowcase />
         </div>
       </div>
     </section>
