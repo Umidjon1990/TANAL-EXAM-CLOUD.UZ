@@ -12,6 +12,14 @@ const config: Config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
+      },
+      boxShadow: {
+        soft: "0 1px 2px 0 rgb(16 24 40 / 0.04), 0 4px 16px -4px rgb(16 24 40 / 0.08)",
+        glow: "0 10px 40px -8px hsl(var(--primary) / 0.35)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

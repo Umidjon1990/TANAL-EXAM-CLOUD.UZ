@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import { APP_URL } from "@/lib/public-config";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -38,7 +43,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="uz" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body
+        className={`${inter.variable} ${display.variable} font-sans antialiased`}
+      >
         {children}
       </body>
     </html>

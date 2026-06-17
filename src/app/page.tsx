@@ -13,6 +13,9 @@ import { Hero } from "@/components/hero";
 import { ExamCard } from "@/components/exam-card";
 import { FadeIn } from "@/components/fade-in";
 import { EmptyState } from "@/components/empty-state";
+import { CountUp } from "@/components/count-up";
+import { RegionChips } from "@/components/region-chips";
+import { Faq } from "@/components/faq";
 import { Button } from "@/components/ui/button";
 import { getPublicCenters, getPublicExams } from "@/lib/queries";
 
@@ -45,7 +48,8 @@ export default async function HomePage() {
     getPublicCenters(),
   ]);
   const upcoming = exams.slice(0, 6);
-  const regionCount = new Set(centers.map((c) => c.region)).size;
+  const regions = [...new Set(centers.map((c) => c.region))].sort();
+  const regionCount = regions.length;
 
   const stats = [
     { icon: CalendarCheck, value: exams.length, label: "Tasdiqlangan sana" },
@@ -68,9 +72,10 @@ export default async function HomePage() {
                 className="flex flex-col items-center gap-1 px-2 text-center"
               >
                 <s.icon className="mb-1 size-5 text-primary sm:size-6" />
-                <span className="text-2xl font-bold tabular-nums sm:text-4xl">
-                  {s.value}
-                </span>
+                <CountUp
+                  value={s.value}
+                  className="font-display text-2xl font-bold tabular-nums sm:text-4xl"
+                />
                 <span className="text-xs text-muted-foreground sm:text-sm">
                   {s.label}
                 </span>
@@ -115,8 +120,33 @@ export default async function HomePage() {
           )}
         </section>
 
+        {/* Viloyat bo'yicha tezkor filtr */}
+        {regions.length > 0 ? (
+          <section className="border-y bg-muted/30">
+            <div className="container py-12 text-center sm:py-16">
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                Viloyatingizni tanlang
+              </h2>
+              <p className="mx-auto mt-2 max-w-xl text-muted-foreground">
+                Hududingiz bo'yicha imtihon sanalarini bir bosishda toping.
+              </p>
+              <div className="mt-8">
+                <RegionChips regions={regions} />
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         {/* Xususiyatlar */}
         <section className="container py-14 sm:py-20">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              Nega TANAL platformasi?
+            </h2>
+            <p className="mt-2 text-muted-foreground">
+              Ishonchli, tez va shaffof imtihon ma'lumotlari
+            </p>
+          </div>
           <div className="grid gap-5 sm:grid-cols-3">
             {FEATURES.map((f, i) => (
               <FadeIn key={f.title} delay={i * 0.08}>
@@ -134,8 +164,23 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section className="border-t bg-muted/30">
+          <div className="container py-14 sm:py-20">
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                Ko'p so'raladigan savollar
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                Eng muhim savollarga qisqa javoblar
+              </p>
+            </div>
+            <Faq />
+          </div>
+        </section>
+
         {/* CTA */}
-        <section className="container pb-20">
+        <section className="container py-20">
           <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary to-emerald-600 px-6 py-12 text-center text-primary-foreground sm:px-12 sm:py-16">
             <div className="bg-grid absolute inset-0 opacity-20" />
             <div className="relative mx-auto max-w-2xl">
