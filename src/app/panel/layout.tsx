@@ -1,16 +1,15 @@
-import { LayoutDashboard, CalendarPlus, Settings } from "lucide-react";
 import { requireTestCenterAdmin } from "@/lib/auth/guards";
 import { DashboardShell } from "@/components/dashboard-shell";
 import type { NavItem } from "@/components/dashboard-nav";
 
 const NAV_ITEMS: NavItem[] = [
-  { href: "/panel", label: "Mening imtihonlarim", icon: LayoutDashboard },
+  { href: "/panel", label: "Mening imtihonlarim", icon: "dashboard" },
   {
     href: "/panel/yangi",
     label: "Yangi sana taklif qilish",
-    icon: CalendarPlus,
+    icon: "calendarPlus",
   },
-  { href: "/panel/sozlamalar", label: "Sozlamalar", icon: Settings },
+  { href: "/panel/sozlamalar", label: "Sozlamalar", icon: "settings" },
 ];
 
 export default async function PanelLayout({
