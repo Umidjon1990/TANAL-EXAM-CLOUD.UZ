@@ -43,6 +43,11 @@ export const createTestCenterSchema = z.object({
     )
     .optional()
     .or(z.literal("")),
+  telegram: z
+    .string()
+    .max(100, "Telegram havolasi juda uzun")
+    .optional()
+    .or(z.literal("")),
 });
 export type CreateTestCenterInput = z.infer<typeof createTestCenterSchema>;
 

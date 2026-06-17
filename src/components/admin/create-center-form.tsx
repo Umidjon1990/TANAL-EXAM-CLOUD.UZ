@@ -87,6 +87,14 @@ export function CreateCenterForm() {
           <Label htmlFor="phone">Telefon (ixtiyoriy)</Label>
           <Input id="phone" name="phone" placeholder="+998901234567" />
         </div>
+        <div className="space-y-2">
+          <Label htmlFor="telegram">Telegram (ixtiyoriy)</Label>
+          <Input
+            id="telegram"
+            name="telegram"
+            placeholder="@username yoki https://t.me/..."
+          />
+        </div>
       </div>
 
       <SubmitButton />

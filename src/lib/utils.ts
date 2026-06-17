@@ -32,6 +32,28 @@ export function formatPrice(price: number | null | undefined): string {
   return new Intl.NumberFormat("uz-UZ").format(price) + " so'm";
 }
 
+/**
+ * Telegram qiymatidan to'liq havola yasaydi.
+ * "@user" -> https://t.me/user ; "t.me/user" -> https://t.me/user ;
+ * to'liq https havola bo'lsa o'zgartirmaydi.
+ */
+export function telegramUrl(value: string): string {
+  const v = value.trim();
+  if (/^https?:\/\//i.test(v)) return v;
+  if (v.startsWith("t.me/")) return `https://${v}`;
+  return `https://t.me/${v.replace(/^@/, "")}`;
+}
+
+/** Telegramni ko'rsatish uchun chiroyli yorliq (@username) */
+export function telegramLabel(value: string): string {
+  const v = value.trim();
+  const handle = v
+    .replace(/^https?:\/\//i, "")
+    .replace(/^t\.me\//i, "")
+    .replace(/^@/, "");
+  return handle.includes("/") ? "Telegram" : `@${handle}`;
+}
+
 /** Matndan slug yaratish */
 export function slugify(text: string): string {
   return text

@@ -1,6 +1,14 @@
-import { MapPin, Phone, Users, Wallet, Clock, Building2 } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Users,
+  Wallet,
+  Clock,
+  Building2,
+  Send,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, telegramUrl, telegramLabel } from "@/lib/utils";
 import type { PublicExam } from "@/lib/queries";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -69,7 +77,7 @@ export function ExamCard({ exam }: { exam: PublicExam }) {
         </div>
 
         {/* Tafsilotlar */}
-        <div className="mt-auto space-y-2 border-t pt-4 text-sm">
+        <div className="space-y-2 border-t pt-4 text-sm">
           <div className="flex items-start gap-2 text-muted-foreground">
             <MapPin className="mt-0.5 size-4 shrink-0 text-foreground/40" />
             <span>{exam.location}</span>
@@ -87,17 +95,36 @@ export function ExamCard({ exam }: { exam: PublicExam }) {
                 {exam.capacity} joy
               </span>
             ) : null}
+          </div>
+        </div>
+
+        {/* Aloqa */}
+        {exam.testCenter.phone || exam.testCenter.telegram ? (
+          <div className="mt-auto flex flex-wrap gap-2 pt-1">
             {exam.testCenter.phone ? (
               <a
                 href={`tel:${exam.testCenter.phone}`}
-                className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
               >
                 <Phone className="size-4" />
-                {exam.testCenter.phone}
+                Qo'ng'iroq
+              </a>
+            ) : null}
+            {exam.testCenter.telegram ? (
+              <a
+                href={telegramUrl(exam.testCenter.telegram)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium text-[#229ED9] transition-colors hover:border-[#229ED9]/40 hover:bg-[#229ED9]/5"
+              >
+                <Send className="size-4" />
+                {telegramLabel(exam.testCenter.telegram)}
               </a>
             ) : null}
           </div>
-        </div>
+        ) : (
+          <div className="mt-auto" />
+        )}
       </div>
     </div>
   );

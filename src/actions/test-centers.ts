@@ -21,6 +21,7 @@ export async function createTestCenterAction(
     city: formData.get("city"),
     address: formData.get("address"),
     phone: formData.get("phone"),
+    telegram: formData.get("telegram"),
   });
 
   if (!parsed.success) {
@@ -29,7 +30,7 @@ export async function createTestCenterAction(
     };
   }
 
-  const { name, region, city, address, phone } = parsed.data;
+  const { name, region, city, address, phone, telegram } = parsed.data;
 
   // Noyob slug yaratamiz
   const baseSlug = slugify(name) || "markaz";
@@ -47,6 +48,7 @@ export async function createTestCenterAction(
       city,
       address: address || null,
       phone: phone || null,
+      telegram: telegram || null,
     },
   });
 

@@ -1,5 +1,6 @@
-import { MapPin, Phone, CalendarCheck, Building2 } from "lucide-react";
+import { MapPin, Phone, CalendarCheck, Building2, Send } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { telegramUrl, telegramLabel } from "@/lib/utils";
 import type { PublicCenter } from "@/lib/queries";
 
 export function CenterCard({ center }: { center: PublicCenter }) {
@@ -37,6 +38,17 @@ export function CenterCard({ center }: { center: PublicCenter }) {
           >
             <Phone className="size-4 text-foreground/40" />
             {center.phone}
+          </a>
+        ) : null}
+        {center.telegram ? (
+          <a
+            href={telegramUrl(center.telegram)}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 text-[#229ED9] transition-colors hover:underline"
+          >
+            <Send className="size-4" />
+            {telegramLabel(center.telegram)}
           </a>
         ) : null}
       </div>

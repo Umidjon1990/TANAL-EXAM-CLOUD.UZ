@@ -31,7 +31,13 @@ export async function getPublicExams(filters?: {
     },
     include: {
       testCenter: {
-        select: { name: true, region: true, city: true, phone: true },
+        select: {
+          name: true,
+          region: true,
+          city: true,
+          phone: true,
+          telegram: true,
+        },
       },
     },
     orderBy: { examDate: "asc" },
@@ -53,6 +59,7 @@ export async function getPublicCenters(region?: string) {
       region: true,
       city: true,
       phone: true,
+      telegram: true,
       address: true,
       _count: {
         select: {
