@@ -54,6 +54,18 @@ export function telegramLabel(value: string): string {
   return handle.includes("/") ? "Telegram" : `@${handle}`;
 }
 
+/** Google Maps qidiruv havolasi */
+export function googleMapsUrl(query: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    query,
+  )}`;
+}
+
+/** Yandex Maps qidiruv havolasi */
+export function yandexMapsUrl(query: string): string {
+  return `https://yandex.uz/maps/?text=${encodeURIComponent(query)}`;
+}
+
 /** Matndan slug yaratish */
 export function slugify(text: string): string {
   return text

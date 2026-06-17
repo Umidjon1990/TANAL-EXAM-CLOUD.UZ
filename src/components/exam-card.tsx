@@ -8,7 +8,13 @@ import {
   Send,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { formatPrice, telegramUrl, telegramLabel } from "@/lib/utils";
+import {
+  formatPrice,
+  telegramUrl,
+  telegramLabel,
+  googleMapsUrl,
+  yandexMapsUrl,
+} from "@/lib/utils";
 import type { PublicExam } from "@/lib/queries";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -78,9 +84,35 @@ export function ExamCard({ exam }: { exam: PublicExam }) {
 
         {/* Tafsilotlar */}
         <div className="space-y-2 border-t pt-4 text-sm">
-          <div className="flex items-start gap-2 text-muted-foreground">
+          <div className="flex items-start gap-2">
             <MapPin className="mt-0.5 size-4 shrink-0 text-foreground/40" />
-            <span>{exam.location}</span>
+            <div className="space-y-1">
+              <p className="text-muted-foreground">{exam.location}</p>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={googleMapsUrl(
+                    `${exam.location}, ${exam.testCenter.city}`,
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
+                >
+                  <MapPin className="size-3" />
+                  Google Maps
+                </a>
+                <a
+                  href={yandexMapsUrl(
+                    `${exam.location}, ${exam.testCenter.city}`,
+                  )}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors hover:bg-primary/10 hover:text-primary"
+                >
+                  <MapPin className="size-3" />
+                  Yandex
+                </a>
+              </div>
+            </div>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-1.5">
             {exam.price !== null ? (
