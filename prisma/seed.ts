@@ -23,17 +23,24 @@ async function main() {
   }
 
   // --- 1. Super Admin ---
+  // Har safar parolni SUPER_ADMIN_PASSWORD ga moslab yangilaymiz —
+  // shu tariqa seed'ni qayta ishga tushirish = parolni tiklash.
+  const passwordHash = await bcrypt.hash(password, 12);
   const superAdmin = await prisma.user.upsert({
     where: { username },
-    update: {},
+    update: {
+      passwordHash,
+      role: "SUPER_ADMIN",
+      isActive: true,
+    },
     create: {
       username,
-      passwordHash: await bcrypt.hash(password, 12),
+      passwordHash,
       fullName: "Bosh Administrator",
       role: "SUPER_ADMIN",
     },
   });
-  console.log(`✅ Super admin: ${superAdmin.username}`);
+  console.log(`✅ Super admin tayyor: ${superAdmin.username}`);
 
   // Demo ma'lumotlar faqat development uchun
   if (process.env.NODE_ENV === "production") {
