@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { env } from "@/lib/env";
+import { APP_URL } from "@/lib/public-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = env.NEXT_PUBLIC_APP_URL;
+  const base = APP_URL;
   const now = new Date();
   return [
     { url: base, lastModified: now, changeFrequency: "daily", priority: 1 },

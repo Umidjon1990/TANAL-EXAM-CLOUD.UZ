@@ -21,6 +21,11 @@ const envSchema = z.object({
     .default("development"),
 });
 
+// `next build` paytida maxfiy o'zgaruvchilar mavjud bo'lmasligi mumkin.
+// Bu fazada build'ni to'xtatmaymiz — xato faqat ogohlantirish sifatida
+// chiqadi. Runtime'da esa noto'g'ri konfiguratsiya bilan ishlamaymiz.
+const isBuildPhase = process.env.NEXT_PHASE === "phase-production-build";
+
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
@@ -28,7 +33,21 @@ if (!parsed.success) {
     "❌ Muhit o'zgaruvchilari noto'g'ri:",
     parsed.error.flatten().fieldErrors,
   );
-  throw new Error("Muhit o'zgaruvchilari konfiguratsiyasi xato.");
+  if (!isBuildPhase) {
+    throw new Error("Muhit o'zgaruvchilari konfiguratsiyasi xato.");
+  }
 }
 
-export const env = parsed.data;
+export const env = parsed.success
+  ? parsed.data
+  : {
+      DATABASE_URL: process.env.DATABASE_URL ?? "",
+      AUTH_SECRET: process.env.AUTH_SECRET ?? "",
+      TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN ?? "",
+      TELEGRAM_CHANNEL_ID: process.env.TELEGRAM_CHANNEL_ID ?? "",
+      NEXT_PUBLIC_APP_URL:
+        process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+      NODE_ENV:
+        (process.env.NODE_ENV as "development" | "test" | "production") ??
+        "production",
+    };
