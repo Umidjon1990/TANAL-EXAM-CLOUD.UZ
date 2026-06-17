@@ -80,6 +80,21 @@ export const rejectExamSchema = z.object({
 });
 export type RejectExamInput = z.infer<typeof rejectExamSchema>;
 
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Joriy parolni kiriting"),
+    newPassword: z
+      .string()
+      .min(8, "Yangi parol kamida 8 belgidan iborat bo'lishi kerak")
+      .max(100),
+    confirmPassword: z.string().min(1, "Parolni tasdiqlang"),
+  })
+  .refine((d) => d.newPassword === d.confirmPassword, {
+    message: "Yangi parol va tasdiq bir xil emas",
+    path: ["confirmPassword"],
+  });
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+
 export const createNewsSchema = z.object({
   title: z.string().min(5, "Sarlavhani kiriting (kamida 5 belgi)").max(200),
   excerpt: z.string().max(300).optional().or(z.literal("")),

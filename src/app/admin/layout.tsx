@@ -4,6 +4,7 @@ import {
   Users,
   Newspaper,
   BarChart3,
+  Settings,
 } from "lucide-react";
 import { requireSuperAdmin } from "@/lib/auth/guards";
 import { DashboardShell } from "@/components/dashboard-shell";
@@ -15,6 +16,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/admin/foydalanuvchilar", label: "Foydalanuvchilar", icon: Users },
   { href: "/admin/yangiliklar", label: "Yangiliklar", icon: Newspaper },
   { href: "/admin/statistika", label: "Statistika", icon: BarChart3 },
+  { href: "/admin/sozlamalar", label: "Sozlamalar", icon: Settings },
 ];
 
 export default async function AdminLayout({
