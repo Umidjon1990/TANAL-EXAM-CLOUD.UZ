@@ -7,7 +7,7 @@ import * as THREE from "three";
 const EMERALD = "#059669";
 const EMERALD_LIGHT = "#34d399";
 
-/** Suzuvchi 3D "imtihon kartalari" guruhi — pointerga reaktiv. */
+/** Suzuvchi 3D "imtihon kartalari" guruhi — avto-aylanadi + pointerga reaktiv. */
 function FloatingCards() {
   const group = useRef<THREE.Group>(null);
 
@@ -49,10 +49,11 @@ function FloatingCards() {
   useFrame((state, delta) => {
     const g = group.current;
     if (!g) return;
-    // Pointer parallax (silliq)
-    const targetY = state.pointer.x * 0.5;
+    // Doimiy sekin aylanish + pointer parallax (silliq)
+    const t = state.clock.elapsedTime;
+    const targetY = t * 0.18 + state.pointer.x * 0.5;
     const targetX = -state.pointer.y * 0.3;
-    g.rotation.y += (targetY - g.rotation.y) * Math.min(1, delta * 3);
+    g.rotation.y += (targetY - g.rotation.y) * Math.min(1, delta * 2);
     g.rotation.x += (targetX - g.rotation.x) * Math.min(1, delta * 3);
 
     // Har bir karta yengil tebranadi

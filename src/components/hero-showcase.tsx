@@ -19,10 +19,12 @@ export function HeroShowcase() {
   const [use3d, setUse3d] = useState(false);
 
   useEffect(() => {
-    const capable =
-      window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setUse3d(capable);
+    // 3D barcha qurilmaларда (mobil ham) ishlaydi — faqat reduced-motion
+    // yoqilgan bo'lsa yengil 2D kartaga tushadi.
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    setUse3d(!reduce);
   }, []);
 
   if (use3d) return <Hero3D />;
